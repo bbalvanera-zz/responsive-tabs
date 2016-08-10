@@ -1,0 +1,19 @@
+<div>
+    <ul class="nav nav-{{tabset.type || 'tabs'}}" ng-class="{'nav-justified': justified}" ng-transclude ng-hide="tabset.displayMode == 1"></ul>
+    <div ng-class="{'tab-content': tabset.displayMode == 0, 'panel-group': tabset.displayMode == 1}">
+        <div ng-class="{active: tabset.activeIndex == tab.index, 'tab-pane': tabset.displayMode == 0, 'panel panel-default': tabset.displayMode == 1}"
+            ng-repeat="tab in tabset.tabs">
+            <div class="panel-heading" ng-show="tabset.displayMode == 1">
+                <h4 class="panel-title">
+                    <a role="button" href class="accordion-toggle" ng-click="tab.onSelecting($event)" responsive-tab-heading-transclude="tab">
+                        {{tab.heading}}
+                    </a>
+                </h4>
+            </div>
+            <div ng-class="{'panel-collapse collapse': tabset.displayMode == 1}" uib-collapse="!tab.active && tabset.displayMode == 1">
+                <div ng-class="{'panel-body': tabset.displayMode == 1}" responsive-tab-content-transclude="tab">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

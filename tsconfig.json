@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "removeComments": true,
+        "outFile": "responsive-tabs.js"
+    },
+    "files": [
+        "src/ResponsiveTabsController.ts",
+        "src/TabHeadingTranscludeDirective.ts",
+        "src/TabContentTranscludeDirective.ts",
+        "src/TabDirective.ts",  
+        "src/TabsetDirective.ts",
+        "src/ResponsiveTabsModule.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/templates/TemplatesModule.ts"
+    ]
+}

@@ -1,0 +1,94 @@
+{
+    "rules": {
+        "align": [
+            true,
+            "parameters",
+            "arguments",
+            "statements"
+        ],
+        "arrow-parens": true,
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space",
+            "check-lowercase"
+        ],
+        "curly": true,
+        "eofline": true,
+        "forin": true,
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "interface-name": true,
+        "member-access": [
+            true,
+            "check-accessor"
+        ],
+        "member-ordering": [
+            true,
+            "private-before-public",
+            "variables-before-functions"
+        ],
+        "new-parens": true,
+        "no-any": false,
+        "no-arg": true,
+        "no-consecutive-blank-lines": true,
+        "no-construct": true,
+        //"no-contructor-vars": true,
+        "no-debugger": true,
+        "no-duplicate-key": true,
+        "no-duplicate-variable": true,
+        "no-empty": true,
+        "no-eval": true,
+        "no-internal-module": true,
+        "no-invalid-this": true,
+        "no-shadowed-variable": true,
+        "no-switch-case-fall-through": true,
+        "no-trailing-whitespace": true,
+        "no-unreachable": true,
+        "no-unused-expression": true,
+        "no-unused-new": true,
+        "no-unused-variable": true,
+        "no-use-before-declare": true,
+        "no-unsafe-finally": true,
+        "no-var-keyword": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "quotemark": [
+            true,
+            "single"
+        ],
+        "semicolon": [
+            true,
+            "always"
+        ],
+        "switch-default": true,
+        "triple-equals": [
+            false,
+            "allow-null-check"
+        ],
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace"
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ]
+    }
+}
