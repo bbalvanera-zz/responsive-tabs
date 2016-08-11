@@ -20,5 +20,5 @@
     $('img').load(sectionHeight);
   });
 
-  angular.module('app', ['bb.responsive-tabs']);
+  angular.module('app', ['bb.responsive-tabs', 'ngAnimate', 'ui.bootstrap']);
 })();

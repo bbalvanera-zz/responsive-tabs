@@ -7,11 +7,12 @@
   <title>ResponsiveTabs by bernardo-balvanera</title>
   <link rel="stylesheet" href="stylesheets/styles.css">
   <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.min.js"></script>
   <script src="javascripts/responsive-tabs.min.js"></script>
   <script src="javascripts/main.js"></script>
   <!--[if lt IE 9]>
@@ -47,18 +48,18 @@
       <ul></ul>
     </nav>
     <section>
-      <h1>
+      <h2>
         <a id="responsive-tabs-directive" class="anchor" href="#responsive-tabs-directive" aria-hidden="true">
           <span aria-hidden="true" class="octicon octicon-link"></span>
         </a>
         Responsive Tabs Directive
-      </h1>
+      </h2>
       <p>
         This simple AngularJS directive transforms an initial Tabs display into an Accordion display based on a given break point.
       </p>
 
-      <h2>Example</h2>
-      <div ng-app="app">
+      <h3>Example</h3>
+      <div ng-app="app" ng-init="display = 1">
         <responsive-tabs break-point="1180" justified="true">
           <responsive-tab heading="Heading 1">Heading 1 content</responsive-tab>
           <responsive-tab heading="Heading 2">Heading 2 content</responsive-tab>
