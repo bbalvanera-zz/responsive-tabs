@@ -5,7 +5,7 @@ namespace bbrt {
     angular.module('bb.responsive-tabs', ['bb.responsive-tabs.tpls']);
     angular.module('bb.responsive-tabs')
         .controller('ResponsiveTabsController', ['$scope', '$window', '$attrs', bbrt.ResponsiveTabsController])
-        .directive('responsiveTabs', bbrt.ResponsiveTabsetDirective.create())
+        .directive('responsiveTabs', bbrt.ResponsiveTabsDirective.create())
         .directive('responsiveTab', bbrt.ResponsiveTabDirective.create())
         .directive('responsiveTabHeadingTransclude', bbrt.ResponsiveTabHeadingTranscludeDirective.create())
         .directive('responsiveTabContentTransclude', bbrt.ResponsiveTabContentTranscludeDirective.create());

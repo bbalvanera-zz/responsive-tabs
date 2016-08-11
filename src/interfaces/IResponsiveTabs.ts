@@ -6,5 +6,6 @@ namespace bbrt {
         type : string;
         justified : boolean;
         breakPoint: number;
+        displayMode: DisplayMode;
     }
 }
