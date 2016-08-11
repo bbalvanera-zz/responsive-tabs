@@ -8,12 +8,12 @@
         "outFile": "responsive-tabs.js"
     },
     "files": [
-        "src/ResponsiveTabsController.ts",
+        "src/ResponsiveTabsModule.ts",
         "src/ResponsiveTabHeadingTranscludeDirective.ts",
         "src/ResponsiveTabContentTranscludeDirective.ts",
         "src/ResponsiveTabDirective.ts",  
         "src/ResponsiveTabsDirective.ts",
-        "src/ResponsiveTabsModule.ts"
+        "src/ResponsiveTabsController.ts"
     ],
     "exclude": [
         "node_modules"

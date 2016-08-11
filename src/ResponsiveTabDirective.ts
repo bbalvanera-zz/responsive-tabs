@@ -4,7 +4,7 @@ namespace bbrt {
     /** The directive for the responsive tab. */
     export class ResponsiveTabDirective implements ng.IDirective {
         public restrict     = 'AE';
-        public require      = '^responsiveTabset';
+        public require      = '^responsiveTabs';
         public replace      = true;
         public transclude   = true;
         public scope = {
