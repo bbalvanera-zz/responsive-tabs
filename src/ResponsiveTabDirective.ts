@@ -1,7 +1,8 @@
-/// <reference path="interfaces/_all.ts" />
+/// <reference path="_all.ts" />
+
 namespace bbrt {
     /** The directive for the responsive tab. */
-    export class TabDirective implements ng.IDirective {
+    export class ResponsiveTabDirective implements ng.IDirective {
         public restrict     = 'AE';
         public require      = '^responsiveTabset';
         public replace      = true;
@@ -22,14 +23,14 @@ namespace bbrt {
             return;
         }
 
-        public templateUrl(element: JQuery, attrs: ITabsetDirectiveProperties): string {
+        public templateUrl(element: JQuery, attrs: IResponsiveTabsDirectiveProperties): string {
             return attrs.templateUrl || 'bbrt/templates/tab.html';
         }
 
         public link(
-            scope      : ITab,
+            scope      : IResponsiveTab,
             element    : JQuery,
-            attrs      : ITabDirectiveAttributes,
+            attrs      : IResponsiveTabDirectiveAttributes,
             controller : IResponsiveTabsController,
             transclude : ng.ITranscludeFunction): void {
             scope.disabled = false;
@@ -60,7 +61,7 @@ namespace bbrt {
         }
 
         public static create(): ng.IDirectiveFactory {
-            let returnValue = ($parse: ng.IParseService) => new TabDirective($parse);
+            let returnValue = ($parse: ng.IParseService) => new ResponsiveTabDirective($parse);
             returnValue.$inject = ['$parse'];
 
             return returnValue;

@@ -1,7 +1,8 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../_all.ts" />
+
 namespace bbrt {
     /** Represents the supported attributes of the Responsive Tab Directive. */
-    export interface ITabDirectiveAttributes extends ng.IAttributes {
+    export interface IResponsiveTabDirectiveAttributes extends ng.IAttributes {
         active      : string;
         disable     : string;
         classes     : string;

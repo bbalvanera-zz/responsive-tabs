@@ -9,14 +9,13 @@
     },
     "files": [
         "src/ResponsiveTabsController.ts",
-        "src/TabHeadingTranscludeDirective.ts",
-        "src/TabContentTranscludeDirective.ts",
-        "src/TabDirective.ts",  
-        "src/TabsetDirective.ts",
+        "src/ResponsiveTabHeadingTranscludeDirective.ts",
+        "src/ResponsiveTabContentTranscludeDirective.ts",
+        "src/ResponsiveTabDirective.ts",  
+        "src/ResponsiveTabsDirective.ts",
         "src/ResponsiveTabsModule.ts"
     ],
     "exclude": [
-        "node_modules",
-        "src/templates/TemplatesModule.ts"
+        "node_modules"
     ]
 }

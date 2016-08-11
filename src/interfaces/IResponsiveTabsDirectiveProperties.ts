@@ -1,6 +1,7 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../_all.ts" />
+
 namespace bbrt {
-    export interface ITabsetDirectiveProperties extends ng.IAttributes {
+    export interface IResponsiveTabsDirectiveProperties extends ng.IAttributes {
         breakPoint  : number;
         templateUrl : string;
         justified   : string;

@@ -1,7 +1,8 @@
+/// <reference path="../_all.ts" />
 
 namespace bbrt {
     /** Represents a Responsive Tab. */
-    export interface ITab extends ng.IScope {
+    export interface IResponsiveTab extends ng.IScope {
         heading        : string;
         headingElement : JQuery;
         index          : number;

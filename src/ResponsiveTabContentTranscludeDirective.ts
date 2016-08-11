@@ -1,14 +1,15 @@
-/// <reference path="interfaces/_all.ts" />
+/// <reference path="_all.ts" />
+
 namespace bbrt {
     /** Directive that handles transclusion of the Tab contents. */
-    export class TabContentTranscludeDirective implements ng.IDirective {
+    export class ResponsiveTabContentTranscludeDirective implements ng.IDirective {
         public restrict = 'A';
 
         public link(
             scope   : ng.IScope,
             element : JQuery,
             attrs   : any) {
-            let tab = <ITab>scope.$eval(attrs.responsiveTabContentTransclude);
+            let tab = <IResponsiveTab>scope.$eval(attrs.responsiveTabContentTransclude);
 
             tab.transclude(tab.$parent, (contents: JQuery) => {
                 angular.forEach(contents, (node: any) => {
@@ -34,7 +35,7 @@ namespace bbrt {
         }
 
         public static create(): ng.IDirectiveFactory {
-            let returnValue = () => new TabContentTranscludeDirective();
+            let returnValue = () => new ResponsiveTabContentTranscludeDirective();
 
             return returnValue;
         }

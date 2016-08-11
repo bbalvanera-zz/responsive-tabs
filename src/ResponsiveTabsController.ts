@@ -1,10 +1,9 @@
-/// <reference path="../typings/index.d.ts" />
-/// <reference path="interfaces/_all.ts" />
+/// <reference path="_all.ts" />
 
 namespace bbrt {
     /** The controller for the Responsive Tabs directive. */
     export class ResponsiveTabsController implements IResponsiveTabsController {
-        private tabs       : ITab[] = [];
+        private tabs       : IResponsiveTab[] = [];
         private destroyed  : boolean = false;
         private breakPoint : number;
 
@@ -17,7 +16,7 @@ namespace bbrt {
             });
         }
 
-        constructor(private $scope: ng.IScope, private $window: ng.IWindowService, $attrs : ITabsetDirectiveProperties) {
+        constructor(private $scope: ng.IScope, private $window: ng.IWindowService, $attrs : IResponsiveTabsDirectiveProperties) {
             this.breakPoint = angular.isDefined($attrs.breakPoint) ? $attrs.breakPoint : 768;
             this.setDisplayMode();
             this.$window.addEventListener('resize', this.onWindowResize);
@@ -34,11 +33,11 @@ namespace bbrt {
             });
         }
 
-        public addTab(tab: ITab): void {
+        public addTab(tab: IResponsiveTab): void {
             tab.index = this.getNextIndex();
 
             this.tabs.push(tab);
-            this.tabs.sort((left: ITab, right: ITab) => {
+            this.tabs.sort((left: IResponsiveTab, right: IResponsiveTab) => {
                 let returnValue = 0;
 
                 if (left.index > right.index) {
@@ -60,7 +59,7 @@ namespace bbrt {
             }
         }
 
-        public removeTab(tab: ITab): void {
+        public removeTab(tab: IResponsiveTab): void {
             if (tab && tab.index > -1) {
                 if (tab.index == this.activeIndex) {
                     let newActiveIndex = tab.index == this.tabs.length - 1 ? tab.index - 1 : tab.index + 1;
@@ -109,7 +108,7 @@ namespace bbrt {
             return returnValue;
         }
 
-        private getTab(tabIndex: number): ITab {
+        private getTab(tabIndex: number): IResponsiveTab {
             return this.tabs[tabIndex];
         }
 

@@ -1,7 +1,8 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../_all.ts" />
+
 namespace bbrt {
     /** Represents a Responsive Tab. */
-    export interface ITabset extends ng.IScope {
+    export interface IResponsiveTabs extends ng.IScope {
         type : string;
         justified : boolean;
         breakPoint: number;
