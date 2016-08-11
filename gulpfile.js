@@ -3,14 +3,13 @@ var connect       = require('gulp-connect');
 var gulp          = require('gulp');
 var karma         = require('karma').server;
 var concat        = require('gulp-concat');
-var jshint        = require('gulp-jshint');
 var header        = require('gulp-header');
 var rename        = require('gulp-rename');
 var es            = require('event-stream');
 var del           = require('del');
 var uglify        = require('gulp-uglify');
-var minifyHtml    = require('gulp-minify-html');
-var minifyCSS     = require('gulp-minify-css');
+var htmlmin       = require('gulp-htmlmin');
+var cleancss      = require('gulp-clean-css');
 var templateCache = require('gulp-angular-templatecache');
 var gutil         = require('gulp-util');
 var plumber       = require('gulp-plumber');
@@ -58,10 +57,10 @@ gulp.task('scripts', function () {
 
   function buildTemplates() {
     return gulp.src('src/**/*.html')
-      .pipe(minifyHtml({
-        empty: true,
-        spare: true,
-        quotes: true
+      .pipe(htmlmin({
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        removeComments: true
       }))
       .pipe(templateCache({ module: 'bb.responsive-tabs.tpls', root: 'bbrt/', standalone: true }));
   };
@@ -105,7 +104,7 @@ gulp.task('styles', function () {
       timestamp: (new Date()).toISOString(), pkg: config.pkg
     }))
     .pipe(gulp.dest('dist'))
-    .pipe(minifyCSS())
+    .pipe(cleancss())
     .pipe(rename({ suffix: '.min.css' }))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
@@ -115,10 +114,6 @@ gulp.task('open', function () {
   gulp.src('./demo/demo.html')
     .pipe(open('', { url: 'http://localhost:8080/demo/demo.html' }));
 });
-
-gulp.task('jshint-test', function () {
-  return gulp.src('./test/**/*.js').pipe(jshint());
-})
 
 gulp.task('karma', function (done) {
   karma.start({
@@ -141,5 +136,5 @@ function handleError(err) {
 gulp.task('build', ['clean', 'scripts', 'styles']);
 gulp.task('serve', ['build', 'connect', 'watch', 'open']);
 gulp.task('default', ['build', 'test']);
-gulp.task('test', ['build', 'jshint-test', 'karma']);
-gulp.task('serve-test', ['build', 'watch', 'jshint-test', 'karma-serve']);
+gulp.task('test', ['build', 'karma']);
+gulp.task('serve-test', ['build', 'watch', 'karma-serve']);

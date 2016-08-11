@@ -1,11 +1,160 @@
 /*!
  * responsive-tabs
  * https://github.com/bernardo-balvanera/responsive-tabs#readme
- * Version: 0.1.0 - 2016-08-10T01:03:08.583Z
+ * Version: 0.1.0 - 2016-08-11T03:14:48.019Z
  * License: MIT
  */
 
 
+var bbrt;
+(function (bbrt) {
+    var ResponsiveTabContentTranscludeDirective = (function () {
+        function ResponsiveTabContentTranscludeDirective() {
+            this.restrict = 'A';
+        }
+        ResponsiveTabContentTranscludeDirective.prototype.link = function (scope, element, attrs) {
+            var _this = this;
+            var tab = scope.$eval(attrs.responsiveTabContentTransclude);
+            tab.transclude(tab.$parent, function (contents) {
+                angular.forEach(contents, function (node) {
+                    if (_this.isTabHeading(node)) {
+                        tab.headingElement = node;
+                    }
+                    else {
+                        element.append(node);
+                    }
+                });
+            });
+        };
+        ResponsiveTabContentTranscludeDirective.prototype.isTabHeading = function (node) {
+            return node.tagName && (node.hasAttribute('responsive-tab-heading') ||
+                node.hasAttribute('data-responsive-tab-heading') ||
+                node.hasAttribute('x-responsive-tab-heading') ||
+                node.tagName.toLowerCase() === 'responsive-tab-heading' ||
+                node.tagName.toLowerCase() === 'data-responsive-tab-heading' ||
+                node.tagName.toLowerCase() === 'x-responsive-tab-heading' ||
+                node.tagName.toLowerCase() === 'responsive:tab-heading');
+        };
+        ResponsiveTabContentTranscludeDirective.create = function () {
+            var returnValue = function () { return new ResponsiveTabContentTranscludeDirective(); };
+            return returnValue;
+        };
+        return ResponsiveTabContentTranscludeDirective;
+    }());
+    bbrt.ResponsiveTabContentTranscludeDirective = ResponsiveTabContentTranscludeDirective;
+})(bbrt || (bbrt = {}));
+var bbrt;
+(function (bbrt) {
+    var ResponsiveTabDirective = (function () {
+        function ResponsiveTabDirective($parse) {
+            this.$parse = $parse;
+            this.restrict = 'AE';
+            this.require = '^responsiveTabset';
+            this.replace = true;
+            this.transclude = true;
+            this.scope = {
+                heading: '@',
+                classes: '@?',
+                onSelect: '&select',
+                onDeselect: '&deselect'
+            };
+            this.controllerAs = 'tab';
+        }
+        ResponsiveTabDirective.prototype.controller = function () {
+            return;
+        };
+        ResponsiveTabDirective.prototype.templateUrl = function (element, attrs) {
+            return attrs.templateUrl || 'bbrt/templates/tab.html';
+        };
+        ResponsiveTabDirective.prototype.link = function (scope, element, attrs, controller, transclude) {
+            scope.disabled = false;
+            if (attrs.disable) {
+                scope.$parent.$watch(this.$parse(attrs.disable), function (value) {
+                    scope.disabled = Boolean(value);
+                });
+            }
+            if (angular.isUndefined(attrs.classes)) {
+                scope.classes = '';
+            }
+            if (!angular.isUndefined(attrs.active) && attrs.active == 'true') {
+                scope.active = true;
+            }
+            scope.$on('$destroy', function (event) { return controller.removeTab(scope); });
+            scope.transclude = transclude;
+            scope.onSelecting = function (event) {
+                if (!scope.disabled) {
+                    controller.selectTab(scope.index, event);
+                }
+            };
+            controller.addTab(scope);
+        };
+        ResponsiveTabDirective.create = function () {
+            var returnValue = function ($parse) { return new ResponsiveTabDirective($parse); };
+            returnValue.$inject = ['$parse'];
+            return returnValue;
+        };
+        return ResponsiveTabDirective;
+    }());
+    bbrt.ResponsiveTabDirective = ResponsiveTabDirective;
+})(bbrt || (bbrt = {}));
+var bbrt;
+(function (bbrt) {
+    var ResponsiveTabHeadingTranscludeDirective = (function () {
+        function ResponsiveTabHeadingTranscludeDirective() {
+            this.restrict = 'A';
+        }
+        ResponsiveTabHeadingTranscludeDirective.prototype.link = function (scope, element, attrs) {
+            var tab = scope.$eval(attrs.responsiveTabHeadingTransclude);
+            tab.$watch('headingElement', function (heading) {
+                if (heading) {
+                    element.html('');
+                    element.append(heading.outerHTML);
+                }
+            });
+        };
+        ResponsiveTabHeadingTranscludeDirective.create = function () {
+            var returnValue = function () { return new ResponsiveTabHeadingTranscludeDirective(); };
+            return returnValue;
+        };
+        return ResponsiveTabHeadingTranscludeDirective;
+    }());
+    bbrt.ResponsiveTabHeadingTranscludeDirective = ResponsiveTabHeadingTranscludeDirective;
+})(bbrt || (bbrt = {}));
+var bbrt;
+(function (bbrt) {
+    var ResponsiveTabsetDirective = (function () {
+        function ResponsiveTabsetDirective() {
+            this.restrict = 'AE';
+            this.transclude = true;
+            this.scope = {};
+            this.controller = 'ResponsiveTabsController';
+            this.controllerAs = 'tabset';
+        }
+        ResponsiveTabsetDirective.prototype.templateUrl = function (element, attrs) {
+            return attrs.templateUrl || 'bbrt/templates/tabset.html';
+        };
+        ResponsiveTabsetDirective.prototype.link = function (scope, element, attrs) {
+            scope.justified = angular.isDefined(attrs.justified) ? scope.$parent.$eval(attrs.justified) : false;
+        };
+        ResponsiveTabsetDirective.create = function () {
+            var returnValue = function () { return new ResponsiveTabsetDirective(); };
+            returnValue.$inject = [];
+            return returnValue;
+        };
+        return ResponsiveTabsetDirective;
+    }());
+    bbrt.ResponsiveTabsetDirective = ResponsiveTabsetDirective;
+})(bbrt || (bbrt = {}));
+var bbrt;
+(function (bbrt) {
+    angular.module('bb.responsive-tabs', ['bb.responsive-tabs.tpls']);
+    angular.module('bb.responsive-tabs')
+        .controller('ResponsiveTabsController', ['$scope', '$window', '$attrs', bbrt.ResponsiveTabsController])
+        .directive('responsiveTabs', bbrt.ResponsiveTabsetDirective.create())
+        .directive('responsiveTab', bbrt.ResponsiveTabDirective.create())
+        .directive('responsiveTabHeadingTransclude', bbrt.ResponsiveTabHeadingTranscludeDirective.create())
+        .directive('responsiveTabContentTransclude', bbrt.ResponsiveTabContentTranscludeDirective.create());
+})(bbrt || (bbrt = {}));
 var bbrt;
 (function (bbrt) {
     var ResponsiveTabsController = (function () {
@@ -107,152 +256,6 @@ var bbrt;
     })(bbrt.DisplayMode || (bbrt.DisplayMode = {}));
     var DisplayMode = bbrt.DisplayMode;
 })(bbrt || (bbrt = {}));
-var bbrt;
-(function (bbrt) {
-    var TabHeadingTranscludeDirective = (function () {
-        function TabHeadingTranscludeDirective() {
-            this.restrict = 'A';
-        }
-        TabHeadingTranscludeDirective.prototype.link = function (scope, element, attrs) {
-            var tab = scope.$eval(attrs.responsiveTabHeadingTransclude);
-            tab.$watch('headingElement', function (heading) {
-                if (heading) {
-                    element.html('');
-                    element.append(heading.outerHTML);
-                }
-            });
-        };
-        TabHeadingTranscludeDirective.create = function () {
-            var returnValue = function () { return new TabHeadingTranscludeDirective(); };
-            return returnValue;
-        };
-        return TabHeadingTranscludeDirective;
-    }());
-    bbrt.TabHeadingTranscludeDirective = TabHeadingTranscludeDirective;
-})(bbrt || (bbrt = {}));
-var bbrt;
-(function (bbrt) {
-    var TabContentTranscludeDirective = (function () {
-        function TabContentTranscludeDirective() {
-            this.restrict = 'A';
-        }
-        TabContentTranscludeDirective.prototype.link = function (scope, element, attrs) {
-            var _this = this;
-            var tab = scope.$eval(attrs.responsiveTabContentTransclude);
-            tab.transclude(tab.$parent, function (contents) {
-                angular.forEach(contents, function (node) {
-                    if (_this.isTabHeading(node)) {
-                        tab.headingElement = node;
-                    }
-                    else {
-                        element.append(node);
-                    }
-                });
-            });
-        };
-        TabContentTranscludeDirective.prototype.isTabHeading = function (node) {
-            return node.tagName && (node.hasAttribute('responsive-tab-heading') ||
-                node.hasAttribute('data-responsive-tab-heading') ||
-                node.hasAttribute('x-responsive-tab-heading') ||
-                node.tagName.toLowerCase() === 'responsive-tab-heading' ||
-                node.tagName.toLowerCase() === 'data-responsive-tab-heading' ||
-                node.tagName.toLowerCase() === 'x-responsive-tab-heading' ||
-                node.tagName.toLowerCase() === 'responsive:tab-heading');
-        };
-        TabContentTranscludeDirective.create = function () {
-            var returnValue = function () { return new TabContentTranscludeDirective(); };
-            return returnValue;
-        };
-        return TabContentTranscludeDirective;
-    }());
-    bbrt.TabContentTranscludeDirective = TabContentTranscludeDirective;
-})(bbrt || (bbrt = {}));
-var bbrt;
-(function (bbrt) {
-    var TabDirective = (function () {
-        function TabDirective($parse) {
-            this.$parse = $parse;
-            this.restrict = 'AE';
-            this.require = '^responsiveTabset';
-            this.replace = true;
-            this.transclude = true;
-            this.scope = {
-                heading: '@',
-                classes: '@?',
-                onSelect: '&select',
-                onDeselect: '&deselect'
-            };
-            this.controllerAs = 'tab';
-        }
-        TabDirective.prototype.controller = function () {
-            return;
-        };
-        TabDirective.prototype.templateUrl = function (element, attrs) {
-            return attrs.templateUrl || 'bbrt/templates/tab.html';
-        };
-        TabDirective.prototype.link = function (scope, element, attrs, controller, transclude) {
-            scope.disabled = false;
-            if (attrs.disable) {
-                scope.$parent.$watch(this.$parse(attrs.disable), function (value) {
-                    scope.disabled = Boolean(value);
-                });
-            }
-            if (angular.isUndefined(attrs.classes)) {
-                scope.classes = '';
-            }
-            if (!angular.isUndefined(attrs.active) && attrs.active == 'true') {
-                scope.active = true;
-            }
-            scope.$on('$destroy', function (event) { return controller.removeTab(scope); });
-            scope.transclude = transclude;
-            scope.onSelecting = function (event) {
-                if (!scope.disabled) {
-                    controller.selectTab(scope.index, event);
-                }
-            };
-            controller.addTab(scope);
-        };
-        TabDirective.create = function () {
-            var returnValue = function ($parse) { return new TabDirective($parse); };
-            returnValue.$inject = ['$parse'];
-            return returnValue;
-        };
-        return TabDirective;
-    }());
-    bbrt.TabDirective = TabDirective;
-})(bbrt || (bbrt = {}));
-var bbrt;
-(function (bbrt) {
-    var TabsetDirective = (function () {
-        function TabsetDirective() {
-            this.restrict = 'AE';
-            this.transclude = true;
-            this.scope = {};
-            this.controller = 'ResponsiveTabsController';
-            this.controllerAs = 'tabset';
-        }
-        TabsetDirective.prototype.templateUrl = function (element, attrs) {
-            return attrs.templateUrl || 'bbrt/templates/tabset.html';
-        };
-        TabsetDirective.prototype.link = function (scope, element, attrs) {
-            scope.justified = angular.isDefined(attrs.justified) ? scope.$parent.$eval(attrs.justified) : false;
-        };
-        TabsetDirective.create = function () {
-            var returnValue = function () { return new TabsetDirective(); };
-            returnValue.$inject = [];
-            return returnValue;
-        };
-        return TabsetDirective;
-    }());
-    bbrt.TabsetDirective = TabsetDirective;
-})(bbrt || (bbrt = {}));
-angular.module('bb.responsive-tabs', ['bb.responsive-tabs.tpls']);
-angular.module('bb.responsive-tabs')
-    .controller('ResponsiveTabsController', ['$scope', '$window', '$attrs', bbrt.ResponsiveTabsController])
-    .directive('responsiveTabset', bbrt.TabsetDirective.create())
-    .directive('responsiveTab', bbrt.TabDirective.create())
-    .directive('responsiveTabHeadingTransclude', bbrt.TabHeadingTranscludeDirective.create())
-    .directive('responsiveTabContentTransclude', bbrt.TabContentTranscludeDirective.create());
 
-angular.module("bb.responsive-tabs.tpls", []).run(["$templateCache", function($templateCache) {$templateCache.put("bbrt/templates/tab.html","<li ng-class=\"[{active: active, disabled: disabled}, classes]\" class=\"uib-tab nav-item\"><a href=\"\" ng-click=\"onSelecting($event)\" class=\"nav-link\" responsive-tab-heading-transclude=\"this\">{{heading}}</a></li>");
-$templateCache.put("bbrt/templates/tabset.html","<div><ul class=\"nav nav-{{tabset.type || \'tabs\'}}\" ng-class=\"{\'nav-justified\': justified}\" ng-transclude=\"\" ng-hide=\"tabset.displayMode == 1\"></ul><div ng-class=\"{\'tab-content\': tabset.displayMode == 0, \'panel-group\': tabset.displayMode == 1}\"><div ng-class=\"{active: tabset.activeIndex == tab.index, \'tab-pane\': tabset.displayMode == 0, \'panel panel-default\': tabset.displayMode == 1}\" ng-repeat=\"tab in tabset.tabs\"><div class=\"panel-heading\" ng-show=\"tabset.displayMode == 1\"><h4 class=\"panel-title\"><a role=\"button\" href=\"\" class=\"accordion-toggle\" ng-click=\"tab.onSelecting($event)\" responsive-tab-heading-transclude=\"tab\">{{tab.heading}}</a></h4></div><div ng-class=\"{\'panel-collapse collapse\': tabset.displayMode == 1}\" uib-collapse=\"!tab.active && tabset.displayMode == 1\"><div ng-class=\"{\'panel-body\': tabset.displayMode == 1}\" responsive-tab-content-transclude=\"tab\"></div></div></div></div></div>");}]);
+angular.module("bb.responsive-tabs.tpls", []).run(["$templateCache", function($templateCache) {$templateCache.put("bbrt/templates/tab.html","<li ng-class=\"[{active: active, disabled: disabled}, classes]\" class=\"uib-tab nav-item\"><a href ng-click=\"onSelecting($event)\" class=\"nav-link\" responsive-tab-heading-transclude=\"this\">{{heading}}</a></li>");
+$templateCache.put("bbrt/templates/tabset.html","<div><ul class=\"nav nav-{{tabset.type || \'tabs\'}}\" ng-class=\"{\'nav-justified\': justified}\" ng-transclude ng-hide=\"tabset.displayMode == 1\"></ul><div ng-class=\"{\'tab-content\': tabset.displayMode == 0, \'panel-group\': tabset.displayMode == 1}\"><div ng-class=\"{active: tabset.activeIndex == tab.index, \'tab-pane\': tabset.displayMode == 0, \'panel panel-default\': tabset.displayMode == 1}\" ng-repeat=\"tab in tabset.tabs\"><div class=\"panel-heading\" ng-show=\"tabset.displayMode == 1\"><h4 class=\"panel-title\"><a role=\"button\" href class=\"accordion-toggle\" ng-click=\"tab.onSelecting($event)\" responsive-tab-heading-transclude=\"tab\">{{tab.heading}}</a></h4></div><div ng-class=\"{\'panel-collapse collapse\': tabset.displayMode == 1}\" uib-collapse=\"!tab.active && tabset.displayMode == 1\"><div ng-class=\"{\'panel-body\': tabset.displayMode == 1}\" responsive-tab-content-transclude=\"tab\"></div></div></div></div></div>");}]);
