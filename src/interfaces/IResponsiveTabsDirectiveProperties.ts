@@ -6,5 +6,6 @@ namespace bbrt {
         templateUrl : string;
         justified   : string;
         type        : string;
+        displayMode : string;
     }
 }
