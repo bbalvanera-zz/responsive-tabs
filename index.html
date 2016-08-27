@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="stylesheets/styles.css">
   <link rel="stylesheet" href="stylesheets/github-dark.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css"
+  />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
@@ -60,7 +61,23 @@
 
       <h3>Example</h3>
       <div ng-app="app" ng-init="display = 1">
-        <responsive-tabs break-point="1180" justified="true">
+        <button ng-click="display = display == 1 ? 0 : 1" style="margin: 10px 5px 10px 0">Click me to change display layout</button>
+        <code>display-mode={{display}}</code>
+        <responsive-tabs justified="true" display-mode="display">
+          <responsive-tab heading="Heading 1">Heading 1 content</responsive-tab>
+          <responsive-tab heading="Heading 2">Heading 2 content</responsive-tab>
+          <responsive-tab heading="Heading 3">Heading 3 content</responsive-tab>
+          <responsive-tab heading="Heading 4">Heading 4 content</responsive-tab>
+        </responsive-tabs>
+
+        <div style="margin: 15px 0">
+          Resize your browser window to see the tabs change dynamically based on window size
+          <pre>
+&lt;responsive-tabs justified="true" break-point="769"&gt; ...
+          </pre>
+        </div>
+
+        <responsive-tabs justified="true" break-point="769">
           <responsive-tab heading="Heading 1">Heading 1 content</responsive-tab>
           <responsive-tab heading="Heading 2">Heading 2 content</responsive-tab>
           <responsive-tab heading="Heading 3">Heading 3 content</responsive-tab>
