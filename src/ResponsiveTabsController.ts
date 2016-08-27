@@ -7,7 +7,7 @@ namespace bbrt {
         private destroyed  : boolean = false;
         private breakPoint : number;
 
-        public displayMode : DisplayMode;
+        public displayMode : DisplayMode = DisplayMode.tabs;
         public activeIndex : number;
 
         private onWindowResize = (event: UIEvent) : void => {
@@ -17,9 +17,12 @@ namespace bbrt {
         }
 
         constructor(private $scope: ng.IScope, private $window: ng.IWindowService, $attrs : IResponsiveTabsDirectiveProperties) {
-            this.breakPoint = angular.isDefined($attrs.breakPoint) ? $attrs.breakPoint : 768;
+            this.breakPoint = $attrs.breakPoint;
             this.setDisplayMode();
-            this.$window.addEventListener('resize', this.onWindowResize);
+
+            if (this.breakPoint !== undefined) {
+                this.$window.addEventListener('resize', this.onWindowResize);
+            }
 
             $scope.$on('$destroy', (): void => {
                 this.$window.removeEventListener('resize', this.onWindowResize);
